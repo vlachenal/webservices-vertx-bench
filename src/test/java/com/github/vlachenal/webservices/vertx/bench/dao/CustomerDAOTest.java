@@ -19,7 +19,8 @@ import com.github.vlachenal.webservices.vertx.bench.MainVerticle;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.ext.asyncsql.PostgreSQLClient;
+import io.vertx.ext.sql.SQLClient;
 import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;
 
@@ -44,11 +45,12 @@ class CustomerDAOTest {
   @BeforeAll
   static void setUpBeforeClass(final Vertx vertx, final VertxTestContext testContext) {
 //    vertx.deployVerticle(new MainVerticle(), testContext.succeeding(id -> testContext.completeNow()));
-    final JDBCClient client = JDBCClient.createShared(vertx, new JsonObject()
-                                                .put("url", "jdbc:postgresql://localhost:5432/apibenchmark")
-                                                .put("user", "apibenchmark")
-                                                .put("password", "apibenchmark")
-                                                .put("driver_class", "org.postgresql.Driver"),
+    final SQLClient client = PostgreSQLClient.createShared(vertx, new JsonObject()
+                                                           .put("host", "localhost")
+                                                           .put("port", 5432)
+                                                           .put("database", "apibenchmark")
+                                                           .put("username", "apibenchmark")
+                                                           .put("password", "apibenchmark"),
         "ApiBenchmark");
     dao = new CustomerDAO(client);
   }
@@ -73,20 +75,20 @@ class CustomerDAOTest {
   @Test
   void testCustomerExists() throws InterruptedException {
     LOG.error("Enter in testCustomerExists");
-    System.out.println("tutu");
+    LOG.error("tutu");
     final Lock lock = new ReentrantLock();
 //    final Condition isFinished = lock.newCondition();
     dao.customerExists(UUID.randomUUID(), res -> {
-      System.out.println("titi");
+      LOG.error("titi");
       lock.unlock();
       if(res.failed()) {
         fail(res.cause().getMessage());
       }
 //      isFinished.signalAll();
     });
-    System.out.println("tata");
+    LOG.error("tata");
     lock.lock();
-    System.out.println("toto");
+    LOG.error("toto");
 //    isFinished.await(3, TimeUnit.SECONDS);
     lock.tryLock(3, TimeUnit.SECONDS);
   }

@@ -29,7 +29,8 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.ext.asyncsql.PostgreSQLClient;
+import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.api.contract.RouterFactoryOptions;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
@@ -122,12 +123,19 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void init(final Vertx vertx, final Context context) {
     super.init(vertx, context);
-    final JDBCClient client = JDBCClient.createShared(vertx, new JsonObject()
-                                                      .put("url", "jdbc:postgresql://localhost:5432/apibenchmark")
-                                                      .put("user", "apibenchmark")
-                                                      .put("password", "apibenchmark")
-                                                      .put("driver_class", "org.postgresql.Driver"),
-              "ApiBenchmark");
+//    final JDBCClient client = JDBCClient.createShared(vertx, new JsonObject()
+//                                                      .put("url", "jdbc:postgresql://localhost:5432/apibenchmark")
+//                                                      .put("user", "apibenchmark")
+//                                                      .put("password", "apibenchmark")
+//                                                      .put("driver_class", "org.postgresql.Driver"),
+//              "ApiBenchmark");
+    final SQLClient client = PostgreSQLClient.createShared(vertx, new JsonObject()
+                                                           .put("host", "localhost")
+                                                           .put("port", 5432)
+                                                           .put("database", "apibenchmark")
+                                                           .put("username", "apibenchmark")
+                                                           .put("password", "apibenchmark"),
+        "ApiBenchmark");
     customer = new CustomerBusiness(new CustomerDAO(client));
   }
 
