@@ -12,42 +12,33 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 
 /**
  * Customer
  *
  * @author Vincent Lachenal
  */
-@ApiModel(description="Customer's informations")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerDTO {
 
   // Attributes +
   /** Customer identifier */
-  @ApiModelProperty(notes="Customer's UUID",example="cecaaf9c-0edd-4968-89ec-3e8f6017c7b9")
   private String id;
 
   /** Customer first name */
-  @ApiModelProperty(notes="Customer's first name",required=true,example="Chuck")
   @JsonProperty(value="first_name")
   private String firstName;
 
   /* Customer last name */
-  @ApiModelProperty(notes="Customer's last name",required=true,example="Norris")
   @JsonProperty(value="last_name")
   private String lastName;
 
   /** Customer brith date */
-  @ApiModelProperty(notes="Customer's birth date",required=true,example="1940-03-10")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   @JsonProperty(value="birth_date")
   private Date birthDate;
 
   /** Customer email address */
-  @ApiModelProperty(notes="Customer's email address",example="chuck.norris@yopmail.com")
   private String email;
   // Attributes -
 

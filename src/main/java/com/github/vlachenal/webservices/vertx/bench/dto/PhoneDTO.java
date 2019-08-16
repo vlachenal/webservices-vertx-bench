@@ -9,16 +9,12 @@ package com.github.vlachenal.webservices.vertx.bench.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 
 /**
  * Phone number
  *
  * @author Vincent Lachenal
  */
-@ApiModel(description="Customer's phone")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PhoneDTO {
 
@@ -86,15 +82,12 @@ public class PhoneDTO {
 
   // Attributes +
   /** Customer identifier */
-  @ApiModelProperty(notes="Phone's UUID",example="4064dddd-19b2-435d-97bd-6851ff728821")
   private String id;
 
   /** Phone type */
-  @ApiModelProperty(notes="Phone type (LANDLINE or MOBILE)",required=true,example="LANDLINE")
   private Type type;
 
   /** Phone number */
-  @ApiModelProperty(notes="Phone number",required=true,example="+33636656565")
   private String number;
 
   /** Customer's identifier: used for HATEOAS only */

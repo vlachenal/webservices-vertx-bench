@@ -156,8 +156,7 @@ public class MainVerticle extends AbstractVerticle {
         LOG.info("Router has been successfully created: {}", routerFactory);
         // Create and mount options to router factory
         routerFactory.setOptions(new RouterFactoryOptions()
-                                 .setMountNotImplementedHandler(true)
-                                 .setMountValidationFailureHandler(false));
+                                 .setMountNotImplementedHandler(true));
 
         LOG.debug("Manage customers resource endpoints");
         routerFactory.addHandlerByOperationId("findCustomers", this::findCustomers)
